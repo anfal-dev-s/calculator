@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Scientific Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="calculator" aria-label="Scientific Calculator">
+        <button type="button" class="history-handle"
+            aria-label="Drag right to reveal calculation history; activate to open"
+            title="Drag right to reveal history, or press Enter to open">
+            <span aria-hidden="true">‹</span>
+        </button>
+
+        <div class="calculator-topbar">
+            <div class="app-mode-switch" role="group" aria-label="Calculator modes">
+                <button type="button" class="app-mode-tab is-active" id="calculator-mode"
+                    aria-pressed="true" aria-controls="display keys">
+                    Calculator
+                </button>
+                <button type="button" class="app-mode-tab" id="conversion-mode"
+                    aria-pressed="false" aria-controls="converter-panel">
+                    Conversions
+                </button>
+            </div>
+            <button type="button" class="theme-toggle" id="theme-toggle"
+                aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false">
+                <span class="theme-toggle__track" aria-hidden="true">
+                    <svg class="theme-toggle__track-icon theme-toggle__track-icon--moon"
+                        viewBox="0 0 24 24" focusable="false">
+                        <path d="M20.2 15.6A8.4 8.4 0 0 1 8.4 3.8 8.5 8.5 0 1 0 20.2 15.6Z" />
+                    </svg>
+                    <svg class="theme-toggle__track-icon theme-toggle__track-icon--sun"
+                        viewBox="0 0 24 24" focusable="false">
+                        <circle cx="12" cy="12" r="3.5" />
+                        <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+                    </svg>
+                    <span class="theme-toggle__thumb">
+                        <svg class="theme-toggle__thumb-icon theme-toggle__thumb-icon--sun"
+                            viewBox="0 0 24 24" focusable="false">
+                            <circle cx="12" cy="12" r="3.5" />
+                            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+                        </svg>
+                        <svg class="theme-toggle__thumb-icon theme-toggle__thumb-icon--moon"
+                            viewBox="0 0 24 24" focusable="false">
+                            <path d="M20.2 15.6A8.4 8.4 0 0 1 8.4 3.8 8.5 8.5 0 1 0 20.2 15.6Z" />
+                        </svg>
+                    </span>
+                </span>
+            </button>
+        </div>
+
+        <section class="display" id="display" aria-label="Calculator display">
+            <div class="display-top">
+                <div class="status-row">
+                    <button type="button" class="status" id="status" aria-label="Switch angle unit">
+                        RAD
+                    </button>
+                    <span class="memory-indicator" id="memory-indicator" aria-label="Memory stored"></span>
+                </div>
+
+                <div class="expression-row">
+                    <div class="expression" id="expression"></div>
+
+                    <button type="button" class="display-clear" id="display-clear" aria-label="Delete last entry"
+                        title="Delete last entry">
+                        ⌫
+                    </button>
+                </div>
+            </div>
+
+            <div class="display-divider"></div>
+
+            <div class="result-row">
+                <span class="display-equals" aria-hidden="true">=</span>
+                <div class="result" id="result">0</div>
+            </div>
+        </section>
+
+        <section class="converter-panel" id="converter-panel"
+            aria-label="Unit conversions" aria-hidden="true" inert hidden>
+            <label class="converter-field">
+                <span>Category</span>
+                <select id="conversion-category" aria-label="Conversion category"></select>
+            </label>
+
+            <label class="converter-field">
+                <span>Value</span>
+                <input id="conversion-value" type="number" inputmode="decimal"
+                    value="1" step="any" aria-label="Value to convert">
+            </label>
+
+            <div class="converter-unit-row">
+                <label class="converter-field">
+                    <span>From</span>
+                    <select id="conversion-from" aria-label="Source unit"></select>
+                </label>
+                <button type="button" class="converter-swap" id="conversion-swap"
+                    aria-label="Swap units" title="Swap units">⇄</button>
+                <label class="converter-field">
+                    <span>To</span>
+                    <select id="conversion-to" aria-label="Target unit"></select>
+                </label>
+            </div>
+
+            <div class="converter-result-card" aria-live="polite">
+                <span>Result</span>
+                <output id="conversion-result" for="conversion-value">1</output>
+            </div>
+        </section>
+
+        <div class="keys" id="keys"></div>
+
+        <section class="graph-panel" id="graph-panel" aria-label="Function graph"
+            aria-hidden="true" inert>
+            <header class="graph-header">
+                <h1>Graph</h1>
+                <button type="button" class="graph-close" aria-label="Close graph">×</button>
+            </header>
+            <form class="graph-form">
+                <div class="graph-form-heading">
+                    <label for="graph-expression">y = f(x)</label>
+                    <button type="button" class="graph-key-toggle" aria-expanded="false"
+                        aria-controls="graph-keypad">Keys</button>
+                </div>
+                <div class="graph-input-row">
+                    <input id="graph-expression" name="expression" type="text"
+                        maxlength="100" autocomplete="off" spellcheck="false"
+                        placeholder="x^2 or sin(x)" aria-describedby="graph-message">
+                    <button type="submit" class="graph-add">Plot</button>
+                </div>
+                <p class="graph-message" id="graph-message" role="status" aria-live="polite"></p>
+                <div class="graph-keypad" id="graph-keypad" aria-label="Function keypad" hidden>
+                    <button type="button" data-graph-key="sin(">sin</button>
+                    <button type="button" data-graph-key="cos(">cos</button>
+                    <button type="button" data-graph-key="tan(">tan</button>
+                    <button type="button" data-graph-key="√(">√</button>
+                    <button type="button" data-graph-key="ln(">ln</button>
+                    <button type="button" data-graph-key="log(">log</button>
+                    <button type="button" data-graph-key="7">7</button>
+                    <button type="button" data-graph-key="8">8</button>
+                    <button type="button" data-graph-key="9">9</button>
+                    <button type="button" data-graph-key="(">(</button>
+                    <button type="button" data-graph-key=")">)</button>
+                    <button type="button" data-graph-action="backspace" aria-label="Delete last character">⌫</button>
+                    <button type="button" data-graph-key="4">4</button>
+                    <button type="button" data-graph-key="5">5</button>
+                    <button type="button" data-graph-key="6">6</button>
+                    <button type="button" data-graph-key="+">+</button>
+                    <button type="button" data-graph-key="−">−</button>
+                    <button type="button" data-graph-key="×">×</button>
+                    <button type="button" data-graph-key="1">1</button>
+                    <button type="button" data-graph-key="2">2</button>
+                    <button type="button" data-graph-key="3">3</button>
+                    <button type="button" data-graph-key="÷">÷</button>
+                    <button type="button" data-graph-key="^">xʸ</button>
+                    <button type="button" data-graph-key="f(">f(x)</button>
+                    <button type="button" data-graph-key="0">0</button>
+                    <button type="button" data-graph-key=".">.</button>
+                    <button type="button" data-graph-key="x">x</button>
+                    <button type="button" data-graph-key="π">π</button>
+                    <button type="button" data-graph-key="e">e</button>
+                    <button type="button" data-graph-action="clear">AC</button>
+                </div>
+            </form>
+            <div class="graph-functions" role="list" aria-label="Plotted functions"></div>
+            <div class="graph-controls">
+                <button type="button" class="graph-zoom-out" aria-label="Zoom out">−</button>
+                <button type="button" class="graph-zoom-in" aria-label="Zoom in">+</button>
+                <button type="button" class="graph-reset">Reset view</button>
+                <span class="graph-point" aria-live="polite">Select a curve point.</span>
+            </div>
+            <canvas class="graph-canvas" aria-label="Function graph with coordinate grid"></canvas>
+            <section class="graph-table-section" aria-label="Function value table">
+                <h2>Values</h2>
+                <div class="graph-table-wrap">
+                    <table class="graph-table">
+                        <thead><tr><th>x</th><th>f(x)</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+
+        <section class="history-screen" id="history-screen" aria-label="Calculation history"
+            aria-hidden="true" inert>
+            <div class="history-page">
+                <header class="history-header">
+                    <span aria-hidden="true"></span>
+                    <h1>History</h1>
+                    <button type="button" class="history-clear" disabled>Clear</button>
+                </header>
+                <p class="history-empty">Your calculations will appear here.</p>
+                <div class="history-list" role="list" aria-label="Previous calculations"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/engine.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/unit-converter.js"></script>
+    <script src="js/view.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/programmable.js"></script>
+    <script src="js/graphing.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/theme.js"></script>
+</body>
+
+</html>

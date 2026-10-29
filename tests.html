@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculator tests</title>
+
+    <style>
+        body {
+            margin: 24px;
+            background: #F6F4EF;
+            color: #1B2430;
+            font: 15px/1.5 "Segoe UI", system-ui, sans-serif;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        .ok {
+            color: #1E6B3A;
+        }
+
+        .fail {
+            color: #8A3D09;
+        }
+
+        li {
+            font-family: "Courier New", monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="summary">Running the tests...</h1>
+
+    <ul id="results"></ul>
+
+    <script src="js/engine.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/unit-converter.js"></script>
+    <script src="js/view.js"></script>
+    <script src="tests.js"></script>
+</body>
+
+</html>
